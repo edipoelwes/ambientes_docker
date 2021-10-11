@@ -1,0 +1,13 @@
+
+//remove todas as images que não estao em uso
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+
+//remove images antigas e não usadas
+docker image prune
+
+//comitar uma imagem
+docker commit fdfe66242ba3 edipoelwes/php-7.4
+
+//enviar a imagem para o docker hub
+docker push edipoelwes/php7.4
+

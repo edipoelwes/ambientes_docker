@@ -1,0 +1,65 @@
+version: '3'
+services:
+
+  #PHP Service
+  app:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    # image: php
+    image: edipoelwes/php-7.2
+    container_name: app_php_site
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app_php
+      SERVICE_TAGS: dev
+    working_dir: /var/www/site_appm
+    volumes:
+      - ./:/var/www
+      - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver_nginx_site
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "83:80"
+      - "446:443"
+    volumes:
+      - ./:/var/www
+      - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #Postgres Service
+  # db:
+  #   image: postgres:13.1
+  #   container_name: db_postgres_site
+  #   restart: unless-stopped
+  #   tty: true
+  #   working_dir: /var/lib/postgresql/data
+  #   ports:
+  #     - "5434:5432"
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=site_appm
+  #   volumes:
+  #     - ./.docker/postgres:/var/lib/postgresql/data
+  #     # - ./.docker/pg_bkp:/var/lib/postgresql/backup
+  #   networks:
+  #     - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+# volumes:
+#   dbdata:
+#     driver: local

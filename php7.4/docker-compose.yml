@@ -1,0 +1,59 @@
+version: '3'
+services:
+
+  #PHP Service
+  app:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    # image: php
+    image: edipoelwes/php-7.4
+    container_name: app_siafc
+    restart: always
+    tty: true
+    environment:
+      SERVICE_NAME: app_php_siafc
+      SERVICE_TAGS: dev
+    working_dir: /var/www/siafc
+    volumes:
+      - ./:/var/www
+      - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver_siafc
+    restart: always
+    tty: true
+    ports:
+      - "81:80"
+      - "445:443"
+    volumes:
+      - ./:/var/www
+      - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #Postgres Service
+  # db:
+  #   image: postgres:13.1
+  #   container_name: postgres_db
+  #   restart: always
+  #   tty: true
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=giss_online
+  #   volumes:
+  #     - ./.docker/postgres:/var/lib/postgresql/data
+  #   networks:
+  #     - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge

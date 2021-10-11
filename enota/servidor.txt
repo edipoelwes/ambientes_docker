@@ -1,0 +1,38 @@
+senha git -> gitstspiinf
+// clonar enota
+- acessar a pagina
+  cd /home/stsnota/public_html/enota_palmeirais# 
+-executar comando
+  cat .git/config
+-pegar a url
+  url = ssh://root@stsinformatica.com.br:1157/home/stsinfo/git-repos/enota_palmeirais.git
+-git clone url
+
+//acessar enota cocal
+cd /home2/cocal/public_html/enota
+
+chown cocal:cocal -R enota
+
+
+ssh sts // para acessar o servidor
+
+mysql // para acessar o mysql
+
+ssh sts > notas
+
+chown stsnota:stsnota -R enota_floriano // alterar as permisões do enota da cidade
+
+/******************************************************************/
+backup banco de dados
+
+mysqldump nomeDoBanco > nomeDoArquivo.sql
+mysqldump stsnota_inhuma > stsnota_inhuma.sql
+
+/* executar o dump do banco */
+mysql -uroot -p banco < banco.sql
+
+zipar o banco
+zip stsnota_inhuma2.sql.zip stsnota_inhuma_2.sql
+
+puchar o banco para a maquina
+scp sts:~/stsnota_inhuma.zip .

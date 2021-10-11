@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  mysql-app:
+    image: kardasz/mysql
+    # image: mysql:5
+    container_name: mysql_db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    working_dir: /var/lib/mysql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+    - app-network
+
+  php-app:
+    #image: alissonzam/php-5.4.45-apache
+    image: edipoelwes/php5.4-apache2:1.0
+    container_name: php5.4
+    ports:
+      - "8080:80"
+    volumes:
+      - ./enotas:/var/www/html
+    depends_on: 
+      - mysql-app
+    links: 
+      - mysql-app
+    networks:
+    - app-network
+
+networks:
+  app-network:
+    driver: bridge

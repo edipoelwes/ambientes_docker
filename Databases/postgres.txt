@@ -1,0 +1,16 @@
+// Acessar o postgres pelo terminal
+   psql -U postgres
+
+// Executar um bando
+   psql -U postgres -d site_appm -f site_appm.sql
+   psql -U postgres -d <banco> -f <dump.sql>
+   psql -U postgres banco < dump.sql
+
+// fazer o backup do banco
+   pg_dump -p2480 -Upostgres siafc_appm > appm2408.sql
+
+// fazer backup do banco dentro do servidor da appm
+   pg_dump -Upostgres site_appm > site_appm_22_09_2021.sql
+
+// transferir o sql do servidor para o maquina local
+   scp appm:~/ssite_appm_22_09_2021.sql.zip .

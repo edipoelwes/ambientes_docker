@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  db_postgres:
+    image: postgres:13.1
+    container_name: postgres
+    restart: always
+    tty: true
+    working_dir: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    networks:
+      - giss_app-network
+      - appm_app-network
+      - site-appm_app-network
+      - siafc_app-network        
+  # db_mysql:
+  #   image: mysql
+  #   container_name: mysql
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   working_dir: /var/lib/mysql
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: laravel
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
+  #   networks:
+  #     - docker-enota_app-network
+#Docker Networks
+networks:
+  siafc_app-network:
+    external: true
+  appm_app-network:
+    external: true
+  site-appm_app-network:
+    external: true
+  giss_app-network:
+    external: true
+    # driver: bridge
