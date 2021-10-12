@@ -11,3 +11,5 @@ docker commit fdfe66242ba3 edipoelwes/php-7.4
 //enviar a imagem para o docker hub
 docker push edipoelwes/php7.4
 
+//instalar o portainer
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.9.1
